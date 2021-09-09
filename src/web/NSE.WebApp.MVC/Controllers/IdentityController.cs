@@ -4,11 +4,19 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using NSE.WebApp.MVC.Models.UserViewModel;
+using NSE.WebApp.MVC.Services;
 
 namespace NSE.WebApp.MVC.Controllers
 {
     public class IdentityController : Controller
     {
+        private readonly IAuthService _authService;
+
+        public IdentityController(IAuthService iAuthService)
+        {
+            this._authService = iAuthService;
+        }
+
         [HttpGet]
         [Route("new-account")]
         public IActionResult Register()
@@ -21,6 +29,8 @@ namespace NSE.WebApp.MVC.Controllers
         public async Task<IActionResult> Register(UserRegister userRegister)
         {
             if (!ModelState.IsValid) return View(userRegister);
+
+            var response = await _authService.Register(userRegister);
 
             return View();
         }
@@ -37,6 +47,8 @@ namespace NSE.WebApp.MVC.Controllers
         public async Task<IActionResult> Login(UserLogin userLogin)
         {
             if (!ModelState.IsValid) return View(userLogin);
+
+            var response = await _authService.Login(userLogin);
 
             return View();
         }
