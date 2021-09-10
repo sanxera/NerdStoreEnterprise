@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 
-namespace NSE.WebApp.MVC.Extensions
+namespace NSE.WebApp.MVC.Extensions.User
 {
     public class AspNetUser : IUser
     {

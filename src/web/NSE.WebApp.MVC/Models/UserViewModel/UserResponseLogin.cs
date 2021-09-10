@@ -1,4 +1,6 @@
-﻿namespace NSE.WebApp.MVC.Models.UserViewModel
+﻿using NSE.WebApp.MVC.Models.ResponseErrorViewModel;
+
+namespace NSE.WebApp.MVC.Models.UserViewModel
 {
     public class UserResponseLogin
     {
@@ -7,5 +9,7 @@
         public double ExpiresIn { get; set; }
 
         public UserToken UserToken { get; set; }
+        
+        public ResponseResult ResponseResult { get; set; }
     }
 }

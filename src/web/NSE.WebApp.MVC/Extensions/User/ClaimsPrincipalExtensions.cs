@@ -4,7 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace NSE.WebApp.MVC.Extensions
+namespace NSE.WebApp.MVC.Extensions.User  
 {
     public static class ClaimsPrincipalExtensions
     {

@@ -12,7 +12,7 @@ using NSE.WebApp.MVC.Services;
 
 namespace NSE.WebApp.MVC.Controllers
 {
-    public class IdentityController : Controller
+    public class IdentityController : MainController
     {
         private readonly IAuthService _authService;
 
@@ -36,6 +36,11 @@ namespace NSE.WebApp.MVC.Controllers
 
             var response = await _authService.Register(userRegister);
 
+            if (ResponseAnyErrors(response.ResponseResult))
+            {
+                return View(userRegister);
+            }
+
             await this.RealizeLogin(response);
 
             return RedirectToAction("Index", "Home");
@@ -55,6 +60,11 @@ namespace NSE.WebApp.MVC.Controllers
             if (!ModelState.IsValid) return View(userLogin);
 
             var response = await _authService.Login(userLogin);
+
+            if (ResponseAnyErrors(response.ResponseResult))
+            {
+                return View(userLogin);
+            }
 
             await this.RealizeLogin(response);
 
