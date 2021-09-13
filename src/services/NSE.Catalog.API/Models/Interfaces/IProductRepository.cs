@@ -9,10 +9,9 @@ namespace NSE.Catalog.API.Models.Interfaces
 {
     public interface IProductRepository : IRepository<Product>
     {
-        Task<IEnumerable<Product>> ObterTodos();
-        Task<Product> ObterPorId(Guid id);
-
-        void Adicionar(Product produto);
-        void Atualizar(Product produto);
+        Task<IEnumerable<Product>> FindAll();
+        Task<Product> FindById(Guid id);
+        void Add(Product produto);
+        void Update(Product produto);
     }
 }
