@@ -9,8 +9,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using NSE.Identity.API.Extesions;
 using NSE.Identity.API.Models;
+using NSE.WebAPI.Core.Identity;
 
 namespace NSE.Identity.API.Controllers
 {

@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NSE.Catalog.API.Configuration;
+using NSE.WebAPI.Core.Identity;
 
 namespace NSE.Catalog.API
 {
@@ -31,6 +32,7 @@ namespace NSE.Catalog.API
         {
             services.AddApiConfiguration(Configuration);
             services.AddSwaggerConfiguration();
+            services.AddJwtConfiguration(Configuration);
             services.RegisterServices();
         }
 
