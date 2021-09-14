@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using NSE.Core.DomainObjects;
+using NSE.Core.DomainObjects.Interfaces;
 
 namespace NSE.Client.API.Models
 {
-    public class Client : Entity
+    public class Client : Entity, IAggregateRoot
     {
         public string Name { get; private set; }
         public Email Email { get; private set; }

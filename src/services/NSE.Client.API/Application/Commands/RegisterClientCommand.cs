@@ -17,7 +17,5 @@ namespace NSE.Client.API.Application.Commands
             Email = email;
             Cpf = cpf;
         }
-
-
     }
 }
