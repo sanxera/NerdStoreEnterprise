@@ -77,7 +77,7 @@ namespace NSE.WebApp.MVC.Controllers
         }
 
         [HttpGet]
-        [Route("´logout")]
+        [Route("logout")]
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);

@@ -12,16 +12,18 @@ namespace NSE.WebApp.MVC.Controllers
     public class HomeController : Controller
     {
 
-        public IActionResult Index()
+        [Route("sistema-indisponivel")]
+        public IActionResult SistemaIndisponivel()
         {
-            return View();
-        }
+            var modelErro = new ErrorViewModel
+            {
+                Message = "O sistema está temporariamente indisponível, isto pode ocorrer em momentos de sobrecarga de usuários.",
+                Title = "Sistema indisponível.",
+                ErrorCode = 500
+            };
 
-        public IActionResult Privacy()
-        {
-            return View();
+            return View("Error", modelErro);
         }
-
 
         [Route("error/{id:length(3,3)}")]
         public IActionResult Error(int id)

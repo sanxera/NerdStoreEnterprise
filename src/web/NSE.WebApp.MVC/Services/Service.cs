@@ -11,7 +11,7 @@ namespace NSE.WebApp.MVC.Services
 {
     public abstract class Service
     {
-        protected StringContent GetContet(object data)
+        protected StringContent GetContent(object data)
         {
             return new StringContent(JsonSerializer.Serialize(data),
                 Encoding.UTF8,

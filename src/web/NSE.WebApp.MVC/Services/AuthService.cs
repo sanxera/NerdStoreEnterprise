@@ -20,7 +20,7 @@ namespace NSE.WebApp.MVC.Services
 
         public async Task<UserResponseLogin> Login(UserLogin userLogin)
         {
-            var loginContent = GetContet(userLogin);
+            var loginContent = GetContent(userLogin);
             
             var response = await _httpClient.PostAsync("/api/identity/auth", loginContent);
 
@@ -37,7 +37,7 @@ namespace NSE.WebApp.MVC.Services
 
         public async Task<UserResponseLogin> Register(UserRegister userRegister)
         {
-            var registerContet = GetContet(userRegister);
+            var registerContet = GetContent(userRegister);
 
             var response = await _httpClient.PostAsync("/api/identity/new-account", registerContet);
 
