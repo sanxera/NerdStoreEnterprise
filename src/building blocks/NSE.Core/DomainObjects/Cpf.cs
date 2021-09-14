@@ -7,20 +7,20 @@ namespace NSE.Core.DomainObjects
 {
     public class Cpf
     {
-        public const int CpfMaxLenght = 11;
-        public string Numero { get; private set; }
+        public const int CpfMaxLength = 11;
+        public string Number { get; private set; }
 
         protected Cpf() { }
 
-        public Cpf(string numero)
+        public Cpf(string number)
         {
-            if (!Validar(numero)) throw new DomainException("CPF inválido");
-            Numero = numero;
+            if (!Validar(number)) throw new DomainException("CPF inválido");
+            Number = number;
         }
 
         public static bool Validar(string cpf)
         {
-            cpf = cpf.ApenasNumeros(cpf);
+            cpf = cpf.OnlyNumbers(cpf);
 
             if (cpf.Length > 11)
                 return false;

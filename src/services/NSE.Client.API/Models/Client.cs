@@ -24,12 +24,12 @@ namespace NSE.Client.API.Models
             Deleted = false;
         }
 
-        public void TrocarEmail(string email)
+        public void ChangeEmail(string email)
         {
             Email = new Email(email);
         }
 
-        public void AtribuirEndereco(Address address)
+        public void NewAddress(Address address)
         {
             Address = address;
         }
