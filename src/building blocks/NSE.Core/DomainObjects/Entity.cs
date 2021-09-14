@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using NSE.Core.Messages;
 
 namespace NSE.Core.DomainObjects
 {
@@ -8,6 +9,31 @@ namespace NSE.Core.DomainObjects
     {
         public Guid Id { get; set; }
 
+        protected Entity()
+        {
+            Id = Guid.NewGuid();
+        }
+
+        private List<Event> _notifications;
+        public IReadOnlyCollection<Event> Notifications => _notifications?.AsReadOnly();
+
+        public void AddEvent(Event evento)
+        {
+            _notifications = _notifications ?? new List<Event>();
+            _notifications.Add(evento);
+        }
+
+        public void RemoveEvent(Event eventItem)
+        {
+            _notifications?.Remove(eventItem);
+        }
+
+        public void ClearEvents()
+        {
+            _notifications?.Clear();
+        }
+
+        #region Comparações
         public override bool Equals(object obj)
         {
             var compareTo = obj as Entity;
@@ -43,5 +69,6 @@ namespace NSE.Core.DomainObjects
         {
             return $"{GetType().Name} [Id={Id}]";
         }
+        #endregion
     }
 }
