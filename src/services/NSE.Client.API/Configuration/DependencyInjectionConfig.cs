@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using FluentValidation.Results;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using NSE.Client.API.Application.Commands;
 using NSE.Client.API.Data;
+using NSE.Core.Mediator;
 
 namespace NSE.Client.API.Configuration
 {
@@ -11,6 +11,8 @@ namespace NSE.Client.API.Configuration
     {
         public static void RegisterServices(this IServiceCollection services)
         {
+            services.AddScoped<IMediatorHandler, MediatorHandler>();
+            services.AddScoped<IRequestHandler<RegisterClientCommand, ValidationResult>, ClientCommandHandler>();
             services.AddScoped<ClientContext>();
         }
     }
