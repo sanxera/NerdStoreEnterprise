@@ -71,7 +71,7 @@ namespace NSE.WebApp.MVC.Controllers
 
             await this.RealizeLogin(response);
 
-            if (string.IsNullOrEmpty(returnUrl)) return RedirectToAction("Index", "Home");
+            if (string.IsNullOrEmpty(returnUrl)) return RedirectToAction("Index", "Catalog");
 
             return LocalRedirect(returnUrl);
         }

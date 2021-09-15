@@ -44,6 +44,7 @@ namespace NSE.Client.API
             services.RegisterServices();
 
             services.AddMediatR(typeof(Startup));
+            services.AddMessageBusConfiguration(Configuration);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
