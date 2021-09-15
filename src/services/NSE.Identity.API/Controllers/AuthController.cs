@@ -26,11 +26,10 @@ namespace NSE.Identity.API.Controllers
 
         private IBus _bus;
 
-        public AuthController(SignInManager<IdentityUser> singInManager, UserManager<IdentityUser> userManager, IOptions<AppSettings> appSettings, IBus bus)
+        public AuthController(SignInManager<IdentityUser> singInManager, UserManager<IdentityUser> userManager, IOptions<AppSettings> appSettings)
         {
             _singInManager = singInManager;
             _userManager = userManager;
-            _bus = bus;
             _appSettings = appSettings.Value;
         }
 

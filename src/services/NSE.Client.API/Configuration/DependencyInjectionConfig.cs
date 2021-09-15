@@ -6,6 +6,7 @@ using NSE.Client.API.Application.Events;
 using NSE.Client.API.Data;
 using NSE.Client.API.Data.Repositorys;
 using NSE.Client.API.Models.Interfaces;
+using NSE.Client.API.Services;
 using NSE.Core.Mediator;
 
 namespace NSE.Client.API.Configuration
@@ -19,6 +20,8 @@ namespace NSE.Client.API.Configuration
             services.AddScoped<IRequestHandler<RegisterClientCommand, ValidationResult>, ClientCommandHandler>();
             services.AddScoped<INotificationHandler<RegisteredClientEvent>, ClientEventHandler>();
             services.AddScoped<ClientContext>();
+
+            services.AddHostedService<RegisteredClientIntegrationHandler>();
         }
     }
 }
