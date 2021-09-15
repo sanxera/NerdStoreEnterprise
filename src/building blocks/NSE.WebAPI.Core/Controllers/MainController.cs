@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace NSE.Identity.API.Controllers
+namespace NSE.WebAPI.Core.Controllers
 {
     [ApiController]
     public abstract class MainController : Controller
@@ -12,7 +13,7 @@ namespace NSE.Identity.API.Controllers
 
         protected ActionResult CustomResponse(object result = null)
         {
-            if (OperacaoValida())
+            if (ValidOperation())
             {
                 return Ok(result);
             }
@@ -28,23 +29,23 @@ namespace NSE.Identity.API.Controllers
             var erros = modelState.Values.SelectMany(e => e.Errors);
             foreach (var erro in erros)
             {
-                AdicionarErroProcessamento(erro.ErrorMessage);
+                AddErrorProcessing(erro.ErrorMessage);
             }
 
             return CustomResponse();
         }
 
-        protected bool OperacaoValida()
+        protected bool ValidOperation()
         {
             return !Errors.Any();
         }
 
-        protected void AdicionarErroProcessamento(string erro)
+        protected void AddErrorProcessing(string erro)
         {
             Errors.Add(erro);
         }
 
-        protected void LimparErrosProcessamento()
+        protected void ClearErrorsProcessing()
         {
             Errors.Clear();
         }

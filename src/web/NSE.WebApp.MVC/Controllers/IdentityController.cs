@@ -43,7 +43,7 @@ namespace NSE.WebApp.MVC.Controllers
 
             await this.RealizeLogin(response);
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Catalog");
         }
 
         [HttpGet]

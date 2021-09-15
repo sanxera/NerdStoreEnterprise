@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using NSE.Identity.API.Models;
+using NSE.WebAPI.Core.Controllers;
 using NSE.WebAPI.Core.Identity;
 
 namespace NSE.Identity.API.Controllers
@@ -49,7 +50,7 @@ namespace NSE.Identity.API.Controllers
 
             foreach (var error in result.Errors)
             {
-                AdicionarErroProcessamento(error.Description);
+                AddErrorProcessing(error.Description);
             }
 
             return CustomResponse();
@@ -69,11 +70,11 @@ namespace NSE.Identity.API.Controllers
 
             if (result.IsLockedOut)
             {
-                AdicionarErroProcessamento("Usuário temporariamente bloqueado por tentativas inválidas");
+                AddErrorProcessing("Usuário temporariamente bloqueado por tentativas inválidas");
                 return CustomResponse();
             }
 
-            AdicionarErroProcessamento("Usuário ou senha incorretos");
+            AddErrorProcessing("Usuário ou senha incorretos");
             return CustomResponse();
         }
 
