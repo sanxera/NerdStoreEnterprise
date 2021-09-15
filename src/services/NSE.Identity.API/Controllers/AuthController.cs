@@ -5,10 +5,12 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using EasyNetQ;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using NSE.Core.Messages.Integration;
 using NSE.Identity.API.Models;
 using NSE.WebAPI.Core.Controllers;
 using NSE.WebAPI.Core.Identity;
@@ -22,10 +24,13 @@ namespace NSE.Identity.API.Controllers
         private readonly UserManager<IdentityUser> _userManager;
         private readonly AppSettings _appSettings;
 
-        public AuthController(SignInManager<IdentityUser> singInManager, UserManager<IdentityUser> userManager, IOptions<AppSettings> appSettings)
+        private IBus _bus;
+
+        public AuthController(SignInManager<IdentityUser> singInManager, UserManager<IdentityUser> userManager, IOptions<AppSettings> appSettings, IBus bus)
         {
             _singInManager = singInManager;
             _userManager = userManager;
+            _bus = bus;
             _appSettings = appSettings.Value;
         }
 
@@ -45,6 +50,8 @@ namespace NSE.Identity.API.Controllers
 
             if (result.Succeeded)
             {
+                var success = RegisterClient(userRegister);
+
                 return CustomResponse(await GenerateJwt(userRegister.Email));
             }
 
@@ -54,6 +61,19 @@ namespace NSE.Identity.API.Controllers
             }
 
             return CustomResponse();
+        }
+
+        private async Task<ResponseMessage> RegisterClient(UserRegister userRegister)
+        {
+            var user = this._userManager.FindByEmailAsync(userRegister.Email);
+
+            var userRegistered = new RegisteredUserIntegrationEvent(Guid.Parse(user.Id.ToString()), userRegister.Name, userRegister.Email, userRegister.Cpf);
+
+            _bus = RabbitHutch.CreateBus("host=localhost:5672");
+
+            var sucesso = await _bus.Rpc.RequestAsync<RegisteredUserIntegrationEvent, ResponseMessage>(userRegistered);
+
+            return sucesso;
         }
 
         [HttpPost("auth")]
