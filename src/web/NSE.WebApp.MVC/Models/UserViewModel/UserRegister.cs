@@ -7,8 +7,8 @@ namespace NSE.WebApp.MVC.Models.UserViewModel
     public class UserRegister
     {
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
-        [DisplayName("Nome Completo")]
-        public string Nome { get; set; }
+        [DisplayName("Name Completo")]
+        public string Name { get; set; }
 
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
         [DisplayName("CPF")]

@@ -11,7 +11,7 @@ namespace NSE.WebApp.MVC.Extensions
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            return Cpf.Validar(value.ToString()) ? ValidationResult.Success : new ValidationResult("CPF em formato inválido");
+            return Cpf.Validate(value.ToString()) ? ValidationResult.Success : new ValidationResult("CPF em formato inválido");
         }
     }
 

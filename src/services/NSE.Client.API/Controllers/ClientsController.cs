@@ -9,7 +9,7 @@ namespace NSE.Client.API.Controllers
 {
     public class ClientsController : MainController
     {
-        [HttpGet]
+        [HttpGet("clients")]
         public IActionResult Index()
         {
             return View();

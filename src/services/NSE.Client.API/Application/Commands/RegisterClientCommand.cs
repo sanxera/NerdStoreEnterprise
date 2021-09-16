@@ -50,7 +50,7 @@ namespace NSE.Client.API.Application.Commands
 
         protected static bool CpfIsValid(string cpf)
         {
-            return Core.DomainObjects.Cpf.Validar(cpf);
+            return Core.DomainObjects.Cpf.Validate(cpf);
         }
 
         protected static bool EmailIsValid(string email)

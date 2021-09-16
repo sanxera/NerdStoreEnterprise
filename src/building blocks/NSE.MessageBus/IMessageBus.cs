@@ -6,7 +6,7 @@ using NSE.Core.Messages.Integration;
 
 namespace NSE.MessageBus
 {
-    internal interface IMessageBus : IDisposable
+    public interface IMessageBus : IDisposable
     {
         bool IsConnected { get; }
         IAdvancedBus AdvancedBus { get; }

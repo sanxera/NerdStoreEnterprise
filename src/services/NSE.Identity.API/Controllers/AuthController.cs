@@ -5,13 +5,13 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using EasyNetQ;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using NSE.Core.Messages.Integration;
 using NSE.Identity.API.Models;
+using NSE.MessageBus;
 using NSE.WebAPI.Core.Controllers;
 using NSE.WebAPI.Core.Identity;
 
@@ -23,13 +23,13 @@ namespace NSE.Identity.API.Controllers
         private readonly SignInManager<IdentityUser> _singInManager;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly AppSettings _appSettings;
+        private readonly IMessageBus _bus;
 
-        private IBus _bus;
-
-        public AuthController(SignInManager<IdentityUser> singInManager, UserManager<IdentityUser> userManager, IOptions<AppSettings> appSettings)
+        public AuthController(SignInManager<IdentityUser> singInManager, UserManager<IdentityUser> userManager, IOptions<AppSettings> appSettings, IMessageBus bus)
         {
             _singInManager = singInManager;
             _userManager = userManager;
+            _bus = bus;
             _appSettings = appSettings.Value;
         }
 
@@ -49,7 +49,13 @@ namespace NSE.Identity.API.Controllers
 
             if (result.Succeeded)
             {
-                var success = RegisterClient(userRegister);
+                var clientResult = await RegisterClient(userRegister);
+
+                if (!clientResult.ValidationResult.IsValid)
+                {
+                    await _userManager.DeleteAsync(user);
+                    return CustomResponse(clientResult.ValidationResult);
+                }
 
                 return CustomResponse(await GenerateJwt(userRegister.Email));
             }
@@ -60,19 +66,6 @@ namespace NSE.Identity.API.Controllers
             }
 
             return CustomResponse();
-        }
-
-        private async Task<ResponseMessage> RegisterClient(UserRegister userRegister)
-        {
-            var user = this._userManager.FindByEmailAsync(userRegister.Email);
-
-            var userRegistered = new RegisteredUserIntegrationEvent(Guid.Parse(user.Id.ToString()), userRegister.Name, userRegister.Email, userRegister.Cpf);
-
-            _bus = RabbitHutch.CreateBus("host=localhost:5672");
-
-            var sucesso = await _bus.Rpc.RequestAsync<RegisteredUserIntegrationEvent, ResponseMessage>(userRegistered);
-
-            return sucesso;
         }
 
         [HttpPost("auth")]
@@ -161,6 +154,23 @@ namespace NSE.Identity.API.Controllers
             });
 
             return tokenHandler.WriteToken(token);
+        }
+
+        private async Task<ResponseMessage> RegisterClient(UserRegister userRegister)
+        {
+            var user = await this._userManager.FindByEmailAsync(userRegister.Email);
+
+            var userRegistered = new RegisteredUserIntegrationEvent(Guid.Parse(user.Id.ToString()), userRegister.Name, userRegister.Email, userRegister.Cpf);
+
+            try
+            {
+                return await _bus.RequestAsync<RegisteredUserIntegrationEvent, ResponseMessage>(userRegistered);
+            }
+            catch
+            {
+                await _userManager.DeleteAsync(user);
+                throw;
+            }
         }
 
         private static long ToUnixEpochDate(DateTime date)

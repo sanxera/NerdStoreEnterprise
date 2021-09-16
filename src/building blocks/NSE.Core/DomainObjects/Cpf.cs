@@ -14,11 +14,11 @@ namespace NSE.Core.DomainObjects
 
         public Cpf(string number)
         {
-            if (!Validar(number)) throw new DomainException("CPF inválido");
+            if (!Validate(number)) throw new DomainException("CPF inválido");
             Number = number;
         }
 
-        public static bool Validar(string cpf)
+        public static bool Validate(string cpf)
         {
             cpf = cpf.OnlyNumbers(cpf);
 

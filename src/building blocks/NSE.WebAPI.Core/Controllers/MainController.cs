@@ -35,6 +35,16 @@ namespace NSE.WebAPI.Core.Controllers
             return CustomResponse();
         }
 
+        protected ActionResult CustomResponse(ValidationResult validationResult)
+        {
+            foreach (var erro in validationResult.Errors)
+            {
+                AddErrorProcessing(erro.ErrorMessage);
+            }
+
+            return CustomResponse();
+        }
+
         protected bool ValidOperation()
         {
             return !Errors.Any();

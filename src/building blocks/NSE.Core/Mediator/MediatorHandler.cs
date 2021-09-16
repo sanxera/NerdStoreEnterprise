@@ -22,7 +22,7 @@ namespace NSE.Core.Mediator
             await _mediator.Publish(evento);
         }
 
-        public async Task<ValidationResult> SendCommand<t, T>(T command) where T : Command
+        public async Task<ValidationResult> SendCommand<T>(T command) where T : Command
         {
             return await _mediator.Send(command);
         }
