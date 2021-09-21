@@ -53,7 +53,7 @@ namespace NSE.Cart.API.Migrations
                     b.Property<string>("Image")
                         .HasColumnType("varchar(100)");
 
-                    b.Property<string>("InventoryQuantity")
+                    b.Property<string>("Quantity")
                         .HasColumnType("varchar(100)");
 
                     b.Property<string>("Name")
