@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FluentValidation;
+using FluentValidation.Results;
 
 namespace NSE.Cart.API.Model
 {
@@ -14,6 +15,7 @@ namespace NSE.Cart.API.Model
         public Guid ClientId { get; set; }
         public decimal ValorTotal { get; set; }
         public List<CartItem> Items { get; set; } = new List<CartItem>();
+        public ValidationResult ValidationResult { get; set; }
 
         public CartClient(Guid clientId)
         {
@@ -42,7 +44,6 @@ namespace NSE.Cart.API.Model
 
         internal void UpdateItem(CartItem item)
         {
-            if (!item.IsValid()) return;
             item.AssociateCart(Id);
 
             var itemExistent = GetByProductId(item.ProductId);
@@ -79,6 +80,15 @@ namespace NSE.Cart.API.Model
         internal CartItem GetByProductId(Guid produtoId)
         {
             return Items.FirstOrDefault(p => p.ProductId == produtoId);
+        }
+
+        internal bool IsValid()
+        {
+            var errors = Items.SelectMany(x => new CartItemValidation().Validate(x).Errors).ToList();
+            errors.AddRange(new CartClientValidation().Validate(this).Errors);
+            ValidationResult = new ValidationResult(errors);
+
+            return ValidationResult.IsValid;
         }
     }
 

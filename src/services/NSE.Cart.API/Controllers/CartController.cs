@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -38,6 +39,7 @@ namespace NSE.Cart.API.Controllers
             else
                 ManipulateExistingCart(cart, item);
 
+            ValidateCart(cart);
             if (!ValidOperation()) return CustomResponse();
 
             await SaveChanges();
@@ -52,6 +54,9 @@ namespace NSE.Cart.API.Controllers
             if (itemCart == null) return CustomResponse();
 
             cart.UpdateUnits(itemCart, item.Quantity);
+
+            ValidateCart(cart);
+            if (!ValidOperation()) return CustomResponse();
 
             _cartContext.CartItems.Update(itemCart);
             _cartContext.CartClient.Update(cart);
@@ -69,11 +74,22 @@ namespace NSE.Cart.API.Controllers
 
             cart.RemoveItem(itemCart);
 
+            ValidateCart(cart);
+            if (!ValidOperation()) return CustomResponse();
+
             _cartContext.CartItems.Remove(itemCart);
             _cartContext.CartClient.Remove(cart);
 
             await SaveChanges();
             return CustomResponse();
+        }
+
+        private bool ValidateCart(CartClient cart)
+        {
+            if (cart.IsValid()) return true;
+
+            cart.ValidationResult.Errors.ToList().ForEach(e => AddErrorProcessing(e.ErrorMessage));
+            return false;
         }
 
         private async Task SaveChanges()
