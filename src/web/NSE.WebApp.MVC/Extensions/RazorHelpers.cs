@@ -19,7 +19,7 @@ namespace NSE.WebApp.MVC.Extensions
             return sBuilder.ToString();
         }
 
-        public static string FormatoMoeda(this RazorPage page, decimal value)
+        public static string CoinFormat(this RazorPage page, decimal value)
         {
             return value > 0 ? string.Format(Thread.CurrentThread.CurrentCulture, "{0:C}", value) : "Gratuito";
         }

@@ -7,6 +7,10 @@ namespace NSE.WebApp.MVC.Models.ResponseErrorViewModel
 {
     public class ResponseResult
     {
+        public ResponseResult()
+        {
+            Errors = new ResponseErrorMessages();
+        }
         public string Title { get; set; }
 
         public int Status { get; set; }

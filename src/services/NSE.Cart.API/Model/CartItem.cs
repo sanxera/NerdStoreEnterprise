@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text.Json.Serialization;
 using FluentValidation;
 
 namespace NSE.Cart.API.Model
@@ -20,6 +18,8 @@ namespace NSE.Cart.API.Model
         public decimal Value { get; set; }
         public string Image { get; set; }
         public Guid CartId { get; set; }
+
+        [JsonIgnore]
         public CartClient CartClient { get; set; }
 
         internal void AssociateCart(Guid cartId)

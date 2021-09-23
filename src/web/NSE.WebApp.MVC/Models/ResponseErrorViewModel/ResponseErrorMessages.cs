@@ -7,6 +7,11 @@ namespace NSE.WebApp.MVC.Models.ResponseErrorViewModel
 {
     public class ResponseErrorMessages
     {
+        public ResponseErrorMessages()
+        {
+            Messages = new List<string>();
+        }
+
         public List<string> Messages { get; set; }
     }
 }

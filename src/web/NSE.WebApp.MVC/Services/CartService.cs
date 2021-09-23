@@ -14,13 +14,13 @@ namespace NSE.WebApp.MVC.Services
 
         public CartService(HttpClient httpClient, IOptions<AppSettings> settings)
         {
-            httpClient.BaseAddress = new Uri(settings.Value.AuthenticationUrl);
+            httpClient.BaseAddress = new Uri(settings.Value.CartUrl);
             _httpClient = httpClient;
         }
 
         public async Task<CartViewModel> GetCart()
         {
-            var response = await _httpClient.GetAsync("/cart/");
+            var response = await _httpClient.GetAsync("/cart");
 
             TreatErrorsResponse(response);
 
@@ -42,7 +42,7 @@ namespace NSE.WebApp.MVC.Services
         {
             var itemContet = GetContent(product);
 
-            var response = await _httpClient.PutAsync($"/cart/{productId}", itemContet);
+            var response = await _httpClient.PutAsync($"/cart/{product.ProductId}", itemContet);
 
             if (!TreatErrorsResponse(response)) return await DeserializeObjectResponse<ResponseResult>(response);
 

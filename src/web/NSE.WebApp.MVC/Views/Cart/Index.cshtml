@@ -46,8 +46,8 @@
                                                 </td>
                                                 <td>
                                                     <div class="price-wrap">
-                                                        <var class="price"> @this.FormatoMoeda(item.Value * item.Quantity)</var>
-                                                        <small class="text-muted"> @this.FormatoMoeda(item.Value) cada</small>
+                                                        <var class="price"> @this.CoinFormat(item.Value * item.Quantity)</var>
+                                                        <small class="text-muted"> @this.CoinFormat(item.Value) cada</small>
                                                     </div>
                                                 </td>
                                                 <form method="post" asp-controller="Cart" asp-action="UpdateCartItem">
@@ -56,7 +56,7 @@
                                                         <input type="hidden" id="ProdutoId" name="ProdutoId" value="@item.ProductId" />
 
                                                         <div class="text-left">
-                                                            <select id="Quantidade" name="Quantidade" style="width: 80px" class="form-control">
+                                                            <select id="Quantity" name="InventoryQuantity" style="width: 80px" class="form-control">
                                                                 @{
                                                                     @Html.Raw(this.SelectOptionsPerQuantity(5, item.Quantity))
                                                                 }
@@ -121,7 +121,7 @@
                             <div class="card-body">
                                 <dl class="dlist-align">
                                     <dt>Valor Total:</dt>
-                                    <dd class="text-right">@this.FormatoMoeda(Model.TotalValue)</dd>
+                                    <dd class="text-right">@this.CoinFormat(Model.TotalValue)</dd>
                                 </dl>
                                 <dl class="dlist-align">
                                     <dt>Desconto:</dt>
@@ -130,7 +130,7 @@
                                 <dl class="dlist-align">
                                     <dt>Total:</dt>
                                     <dd class="text-right  h5">
-                                        <strong>@this.FormatoMoeda(Model.TotalValue)</strong>
+                                        <strong>@this.CoinFormat(Model.TotalValue)</strong>
                                     </dd>
                                 </dl>
                                 <hr>
