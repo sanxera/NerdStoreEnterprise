@@ -53,10 +53,10 @@
                                                 <form method="post" asp-controller="Cart" asp-action="UpdateCartItem">
                                                     <td>
 
-                                                        <input type="hidden" id="ProdutoId" name="ProdutoId" value="@item.ProductId" />
+                                                        <input type="hidden" id="ProductId" name="ProductId" value="@item.ProductId" />
 
                                                         <div class="text-left">
-                                                            <select id="Quantity" name="InventoryQuantity" style="width: 80px" class="form-control">
+                                                            <select id="Quantity" name="Quantity" style="width: 80px" class="form-control">
                                                                 @{
                                                                     @Html.Raw(this.SelectOptionsPerQuantity(5, item.Quantity))
                                                                 }
@@ -77,7 +77,7 @@
                                                     <form method="post" asp-controller="Cart" asp-action="DeleteCartItem">
                                                         <div>
 
-                                                            <input type="hidden" id="ProdutoId" name="ProdutoId" value="@item.ProductId" />
+                                                            <input type="hidden" id="ProductId" name="ProductId" value="@item.ProductId" />
 
                                                             <button type="submit" class="btn btn-danger">
                                                                 <i class="fas fa-trash-alt"></i>

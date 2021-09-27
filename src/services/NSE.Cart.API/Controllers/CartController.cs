@@ -73,11 +73,10 @@ namespace NSE.Cart.API.Controllers
 
             cart.RemoveItem(itemCart);
 
-            ValidateCart(cart);
             if (!ValidOperation()) return CustomResponse();
 
             _cartContext.CartItems.Remove(itemCart);
-            _cartContext.CartClient.Remove(cart);
+            _cartContext.CartClient.Update(cart);
 
             await SaveChanges();
             return CustomResponse();
@@ -141,7 +140,7 @@ namespace NSE.Cart.API.Controllers
             ValidateCart(cart);
 
             if (productExistsExisting)
-                _cartContext.CartItems.Update(cart.GetByProductId(item.Id));
+                _cartContext.CartItems.Update(cart.GetByProductId(item.ProductId));
             else
                 _cartContext.CartItems.Add(item);
 
