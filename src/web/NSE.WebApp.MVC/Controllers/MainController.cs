@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using NSE.WebApp.MVC.Models.ResponseErrorViewModel;
+using NSE.Core.Communication;
 
 namespace NSE.WebApp.MVC.Controllers
 {

@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using NSE.WebApp.MVC.Models.UserViewModel;
 
-namespace NSE.WebApp.MVC.Services
+namespace NSE.WebApp.MVC.Services.Interfaces
 {
     public interface IAuthService
     {

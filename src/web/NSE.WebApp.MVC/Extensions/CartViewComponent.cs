@@ -2,21 +2,22 @@
 using Microsoft.AspNetCore.Mvc;
 using NSE.WebApp.MVC.Models;
 using NSE.WebApp.MVC.Services;
+using NSE.WebApp.MVC.Services.Interfaces;
 
 namespace NSE.WebApp.MVC.Extensions
 {
     public class CartViewComponent : ViewComponent
     {
-        private readonly ICartService _cartService;
+        private readonly IPurchasesBffService _purchasesBffService;
 
-        public CartViewComponent(ICartService cartService)
+        public CartViewComponent(IPurchasesBffService purchasesBffService)
         {
-            _cartService = cartService;
+            _purchasesBffService = purchasesBffService;
         }
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            return View(await _cartService.GetCart() ?? new CartViewModel());
+            return View(await _purchasesBffService.GetCartQuantity());
         }
     }
 }

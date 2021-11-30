@@ -6,6 +6,7 @@ using NSE.WebAPI.Core.User;
 using NSE.WebApp.MVC.Extensions;
 using NSE.WebApp.MVC.Services;
 using NSE.WebApp.MVC.Services.Handlers;
+using NSE.WebApp.MVC.Services.Interfaces;
 using Polly;
 
 namespace NSE.WebApp.MVC.Configuration
@@ -29,7 +30,7 @@ namespace NSE.WebApp.MVC.Configuration
                 .AddTransientHttpErrorPolicy(
                     p => p.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30))); ;
 
-            services.AddHttpClient<ICartService, CartService>()
+            services.AddHttpClient<IPurchasesBffService, PurchasesBffService>()
                 .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>()
                 .AddPolicyHandler(PollyExtensions.WaitAndRetry())
                 .AddTransientHttpErrorPolicy(

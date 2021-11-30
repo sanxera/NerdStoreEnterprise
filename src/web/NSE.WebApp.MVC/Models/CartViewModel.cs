@@ -8,6 +8,6 @@ namespace NSE.WebApp.MVC.Models
     public class CartViewModel
     {
         public decimal TotalValue { get; set; }
-        public List<ItemProductViewModel> Items { get; set; } = new List<ItemProductViewModel>();
+        public List<ItemCartViewModel> Items { get; set; } = new List<ItemCartViewModel>();
     }
 }

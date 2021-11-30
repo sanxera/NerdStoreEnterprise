@@ -9,6 +9,6 @@ namespace NSE.WebApp.MVC.Extensions
     {
         public string AuthenticationUrl { get; set; }
         public string CatalogUrl { get; set; }
-        public string CartUrl { get; set; }
+        public string PurchasesBff { get; set; }
     }
 }

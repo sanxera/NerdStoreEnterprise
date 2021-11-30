@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using NSE.Core.Communication;
 
 namespace NSE.BFF.Purchases.Services
 {
@@ -31,6 +32,11 @@ namespace NSE.BFF.Purchases.Services
 
             response.EnsureSuccessStatusCode();
             return true;
+        }
+
+        protected ResponseResult ReturnOk()
+        {
+            return new ResponseResult();
         }
     }
 }

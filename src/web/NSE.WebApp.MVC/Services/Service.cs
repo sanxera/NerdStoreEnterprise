@@ -2,8 +2,8 @@
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using NSE.Core.Communication;
 using NSE.WebApp.MVC.Extensions.Exceptions;
-using NSE.WebApp.MVC.Models.ResponseErrorViewModel;
 
 namespace NSE.WebApp.MVC.Services
 {

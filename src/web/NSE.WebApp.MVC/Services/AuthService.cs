@@ -2,9 +2,10 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
+using NSE.Core.Communication;
 using NSE.WebApp.MVC.Extensions;
-using NSE.WebApp.MVC.Models.ResponseErrorViewModel;
 using NSE.WebApp.MVC.Models.UserViewModel;
+using NSE.WebApp.MVC.Services.Interfaces;
 
 namespace NSE.WebApp.MVC.Services
 {

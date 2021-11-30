@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using NSE.WebApp.MVC.Models.UserViewModel;
 using NSE.WebApp.MVC.Services;
+using NSE.WebApp.MVC.Services.Interfaces;
 
 namespace NSE.WebApp.MVC.Controllers
 {
