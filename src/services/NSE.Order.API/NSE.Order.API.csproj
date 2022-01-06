@@ -19,5 +19,11 @@
     <ProjectReference Include="..\NSE.Order.Infra\NSE.Order.Infra.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Application\Commands\" />
+    <Folder Include="Application\Events\" />
+    <Folder Include="Application\Queries\" />
+  </ItemGroup>
+
 
 </Project>
