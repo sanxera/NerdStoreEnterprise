@@ -4,18 +4,23 @@ using System.Linq;
 using System.Threading.Tasks;
 using FluentValidation;
 using FluentValidation.Results;
+using NSE.Cart.API.Model.Enums;
 
 namespace NSE.Cart.API.Model
 {
     public class CartClient
     {
-        internal const int MAX_QUANTIDADE_ITEM = 5;
+        internal const int MAX_QUANTITY_ITEM = 5;
 
         public Guid Id { get; set; }
         public Guid ClientId { get; set; }
-        public decimal ValorTotal { get; set; }
+        public decimal TotalValue { get; set; }
         public List<CartItem> Items { get; set; } = new List<CartItem>();
         public ValidationResult ValidationResult { get; set; }
+
+        public bool UsedVoucher { get; set; }
+        public decimal Discount { get; set; }
+        public Voucher Voucher { get; set; }
 
         public CartClient(Guid clientId)
         {
@@ -24,6 +29,41 @@ namespace NSE.Cart.API.Model
         }
 
         public CartClient() { }
+
+        public void ApplyVoucher(Voucher voucher)
+        {
+            Voucher = voucher;
+            UsedVoucher = true;
+            CalculateCartValue();
+        }
+
+        private void CalculateTotalValueDiscount()
+        {
+            if (!UsedVoucher) return;
+
+            decimal discount = 0;
+            var value = TotalValue;
+
+            if (Voucher.DiscountType == TypeVoucherDiscount.Percent)
+            {
+                if (Voucher.Percent.HasValue)
+                {
+                    discount = (value * Voucher.Percent.Value) / 100;
+                    value -= discount;
+                }
+            }
+            else
+            {
+                if (Voucher.ValueDiscount.HasValue)
+                {
+                    discount = Voucher.ValueDiscount.Value;
+                    value -= discount;
+                }
+            }
+
+            TotalValue = value < 0 ? 0 : value;
+            Discount = discount;
+        }
 
         internal void AddNewItem(CartItem item)
         {
@@ -69,7 +109,8 @@ namespace NSE.Cart.API.Model
 
         internal void CalculateCartValue()
         {
-            ValorTotal = Items.Sum(p => p.CaculateValue());
+            TotalValue = Items.Sum(p => p.CaculateValue());
+            CalculateTotalValueDiscount();
         }
 
         internal bool ItemExistInCart(CartItem item)
@@ -104,7 +145,7 @@ namespace NSE.Cart.API.Model
                 .GreaterThan(0)
                 .WithMessage("O carrinho não possui itens");
 
-            RuleFor(c => c.ValorTotal)
+            RuleFor(c => c.TotalValue)
                 .GreaterThan(0)
                 .WithMessage("O valor total do carrinho precisa ser maior que 0");
         }

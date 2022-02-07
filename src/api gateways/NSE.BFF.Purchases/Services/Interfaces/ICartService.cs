@@ -13,5 +13,6 @@ namespace NSE.BFF.Purchases.Services.Interfaces
         Task<ResponseResult> AddItemToCart(ItemCartDto product);
         Task<ResponseResult> UpdateItemFromCart(Guid productId, ItemCartDto product);
         Task<ResponseResult> RemoveItemFromCart(Guid productId);
+        Task<ResponseResult> ApplyVoucher(VoucherDTO voucher);
     }
 }

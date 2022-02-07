@@ -28,7 +28,7 @@ namespace NSE.Cart.API.Migrations
                     b.Property<Guid>("ClientId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<decimal>("ValorTotal")
+                    b.Property<decimal>("TotalValue")
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");

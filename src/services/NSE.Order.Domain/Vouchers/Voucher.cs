@@ -26,5 +26,12 @@ namespace NSE.Order.Domain.Vouchers
                 .And(new VoucherSpec.VoucherDateSpecification())
                 .IsSatisfiedBy(this);
         }
+
+        public void MarkedAsUsed()
+        {
+            Active = false;
+            Used = true;
+            Quantity = 0;
+        }
     }
 }

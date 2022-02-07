@@ -15,11 +15,13 @@ namespace NSE.BFF.Purchases.Controllers
     {
         private readonly ICartService _cartService;
         private readonly ICatalogService _catalogService;
+        private readonly IOrderService _orderService;
 
-        public CartController(ICartService cartService, ICatalogService catalogService)
+        public CartController(ICartService cartService, ICatalogService catalogService, IOrderService orderService)
         {
             _cartService = cartService;
             _catalogService = catalogService;
+            _orderService = orderService;
         }
 
         [HttpGet]
@@ -84,6 +86,23 @@ namespace NSE.BFF.Purchases.Controllers
             var response = await _cartService.RemoveItemFromCart(productId);
 
             return CustomResponse();
+        }
+
+        [HttpPost]
+        [Route("purchases/cart/apply-voucher")]
+        public async Task<IActionResult> AddVoucher([FromBody] string voucherCode)
+        {
+            var voucher = await _orderService.FindVoucherByCode(voucherCode);
+
+            if (voucher is null)
+            {
+                AddErrorProcessing("Invalid voucher !");
+                return CustomResponse();
+            }
+
+            var response = await _cartService;
+
+            return CustomResponse(response);
         }
 
         private async Task ValidateCartItem(ItemProductDto product, int quantity)

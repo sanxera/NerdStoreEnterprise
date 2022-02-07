@@ -33,6 +33,24 @@ namespace NSE.Cart.API.Data
                 .HasName("IDX_Client");
 
             modelBuilder.Entity<CartClient>()
+                .Ignore(c => c.Voucher)
+                .OwnsOne(c => c.Voucher, v =>
+                {
+                    v.Property(vc => vc.Code)
+                        .HasColumnName("VoucherCode")
+                        .HasColumnType("varchar(50)");
+
+                    v.Property(vc => vc.DiscountType)
+                        .HasColumnName("DiscountType");
+
+                    v.Property(vc => vc.Percent)
+                        .HasColumnName("Percent");
+
+                    v.Property(vc => vc.ValueDiscount)
+                        .HasColumnName("ValueDiscount");
+                });
+
+            modelBuilder.Entity<CartClient>()
                 .HasMany(c => c.Items)
                 .WithOne(i => i.CartClient)
                 .HasForeignKey(c => c.CartId);

@@ -30,6 +30,7 @@ namespace NSE.Cart.API.Controllers
         }
 
         [HttpPost("cart")]
+        [Route("cart/apply-voucher")]
         public async Task<IActionResult> AddNewItemCart(CartItem item)
         {
             var cart = await GetClientCart();
@@ -42,6 +43,19 @@ namespace NSE.Cart.API.Controllers
             if (!ValidOperation()) return CustomResponse();
 
             await SaveChanges();
+            return CustomResponse();
+        }
+
+        public async Task<IActionResult> ApplyVoucher(Voucher voucher)
+        {
+            var cart = await GetCart();
+
+            cart.ApplyVoucher(voucher);
+
+            _cartContext.CartClient.Update(cart);
+            var result = await _cartContext.SaveChangesAsync();
+            if (result <= 0) AddErrorProcessing("Não foi possível persistir os dados no banco");
+
             return CustomResponse();
         }
 
@@ -121,7 +135,6 @@ namespace NSE.Cart.API.Controllers
 
             return itemCart;
         }
-
 
         private void ManipulateNewCart(CartItem item)
         {

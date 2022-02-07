@@ -65,8 +65,8 @@ namespace NSE.Cart.API.Model
                 .WithMessage(item => $"A quantidade miníma para o {item.Name} é 1");
 
             RuleFor(c => c.Quantity)
-                .LessThanOrEqualTo(CartClient.MAX_QUANTIDADE_ITEM)
-                .WithMessage(item => $"A quantidade máxima do {item.Name} é {CartClient.MAX_QUANTIDADE_ITEM}");
+                .LessThanOrEqualTo(CartClient.MAX_QUANTITY_ITEM)
+                .WithMessage(item => $"A quantidade máxima do {item.Name} é {CartClient.MAX_QUANTITY_ITEM}");
 
             RuleFor(c => c.Value)
                 .GreaterThan(0)
