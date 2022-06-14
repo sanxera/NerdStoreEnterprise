@@ -7,7 +7,7 @@ namespace NSE.Cart.API.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<int>(
-                name: "Quantity",
+                name: "InventoryQuantity",
                 table: "CartItems",
                 nullable: false,
                 oldClrType: typeof(string),
@@ -75,7 +75,7 @@ namespace NSE.Cart.API.Migrations
                 table: "CartClient");
 
             migrationBuilder.AlterColumn<string>(
-                name: "Quantity",
+                name: "InventoryQuantity",
                 table: "CartItems",
                 type: "varchar(100)",
                 nullable: true,

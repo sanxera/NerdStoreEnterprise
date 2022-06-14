@@ -14,7 +14,7 @@ namespace NSE.Cart.API.Model
         public Guid Id { get; set; }
         public Guid ProductId { get; set; }
         public string Name { get; set; }
-        public int Quantity { get; set; }
+        public int InventoryQuantity { get; set; }
         public decimal Value { get; set; }
         public string Image { get; set; }
         public Guid CartId { get; set; }
@@ -29,17 +29,17 @@ namespace NSE.Cart.API.Model
 
         internal decimal CaculateValue()
         {
-            return Quantity * Value;
+            return InventoryQuantity * Value;
         }
 
         internal void AddNewUnits(int units)
         {
-            Quantity += units;
+            InventoryQuantity += units;
         }
 
         internal void UpdateNewUnits(int units)
         {
-            Quantity = units;
+            InventoryQuantity = units;
         }
 
         internal bool IsValid()
@@ -60,11 +60,11 @@ namespace NSE.Cart.API.Model
                 .NotEmpty()
                 .WithMessage("O nome do produto não foi informado");
 
-            RuleFor(c => c.Quantity)
+            RuleFor(c => c.InventoryQuantity)
                 .GreaterThan(0)
                 .WithMessage(item => $"A quantidade miníma para o {item.Name} é 1");
 
-            RuleFor(c => c.Quantity)
+            RuleFor(c => c.InventoryQuantity)
                 .LessThanOrEqualTo(CartClient.MAX_QUANTITY_ITEM)
                 .WithMessage(item => $"A quantidade máxima do {item.Name} é {CartClient.MAX_QUANTITY_ITEM}");
 

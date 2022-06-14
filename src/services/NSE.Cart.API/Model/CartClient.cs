@@ -71,7 +71,7 @@ namespace NSE.Cart.API.Model
             if (ItemExistInCart(item))
             {
                 var itemExists = GetByProductId(item.ProductId);
-                itemExists.AddNewUnits(item.Quantity);
+                itemExists.AddNewUnits(item.InventoryQuantity);
 
                 item = itemExists;
                 Items.Remove(itemExists);

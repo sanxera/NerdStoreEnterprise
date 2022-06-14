@@ -63,7 +63,7 @@ namespace NSE.Cart.API.Migrations
                     b.Property<Guid>("ProductId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Quantity")
+                    b.Property<int>("InventoryQuantity")
                         .HasColumnType("int");
 
                     b.Property<decimal>("Value")

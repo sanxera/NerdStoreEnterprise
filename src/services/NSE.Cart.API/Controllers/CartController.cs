@@ -30,7 +30,6 @@ namespace NSE.Cart.API.Controllers
         }
 
         [HttpPost("cart")]
-        [Route("cart/apply-voucher")]
         public async Task<IActionResult> AddNewItemCart(CartItem item)
         {
             var cart = await GetClientCart();
@@ -46,19 +45,6 @@ namespace NSE.Cart.API.Controllers
             return CustomResponse();
         }
 
-        public async Task<IActionResult> ApplyVoucher(Voucher voucher)
-        {
-            var cart = await GetCart();
-
-            cart.ApplyVoucher(voucher);
-
-            _cartContext.CartClient.Update(cart);
-            var result = await _cartContext.SaveChangesAsync();
-            if (result <= 0) AddErrorProcessing("Não foi possível persistir os dados no banco");
-
-            return CustomResponse();
-        }
-
         [HttpPut("cart/{productId}")]
         public async Task<IActionResult> UpdateCartItem(Guid productId, CartItem item)
         {
@@ -66,7 +52,7 @@ namespace NSE.Cart.API.Controllers
             var itemCart = await GetCartItemValidated(productId, cart, item);
             if (itemCart == null) return CustomResponse();
 
-            cart.UpdateUnits(itemCart, item.Quantity);
+            cart.UpdateUnits(itemCart, item.InventoryQuantity);
 
             ValidateCart(cart);
             if (!ValidOperation()) return CustomResponse();
@@ -90,6 +76,18 @@ namespace NSE.Cart.API.Controllers
             if (!ValidOperation()) return CustomResponse();
 
             _cartContext.CartItems.Remove(itemCart);
+            _cartContext.CartClient.Update(cart);
+
+            await SaveChanges();
+            return CustomResponse();
+        }
+
+        [HttpPost("cart/apply-voucher")]
+        public async Task<IActionResult> ApplyVoucher(Voucher voucher)
+        {
+            var cart = await GetCart();
+
+            cart.ApplyVoucher(voucher);
             _cartContext.CartClient.Update(cart);
 
             await SaveChanges();
