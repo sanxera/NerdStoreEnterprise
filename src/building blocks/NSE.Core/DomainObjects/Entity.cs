@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using NSE.Core.Messages;
 
 namespace NSE.Core.DomainObjects

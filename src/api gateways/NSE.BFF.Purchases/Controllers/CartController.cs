@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyInjection;
 using NSE.BFF.Purchases.Models;
 using NSE.BFF.Purchases.Services.Interfaces;
 using NSE.WebAPI.Core.Controllers;
@@ -100,9 +99,9 @@ namespace NSE.BFF.Purchases.Controllers
                 return CustomResponse();
             }
 
-            var response = await _cartService;
+            //var response = await _cartService;
 
-            return CustomResponse(response);
+            return CustomResponse();
         }
 
         private async Task ValidateCartItem(ItemProductDto product, int quantity)

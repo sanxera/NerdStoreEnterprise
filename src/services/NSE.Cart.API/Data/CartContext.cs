@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using FluentValidation.Results;
 using Microsoft.EntityFrameworkCore;
 using NSE.Cart.API.Model;
-using NSE.Core.DomainObjects;
 
 namespace NSE.Cart.API.Data
 {
